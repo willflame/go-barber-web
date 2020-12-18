@@ -5,7 +5,7 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import getValidationErrors from '../../utils/getValidadtionErrors';
+import getValidationErrors from '../../utils/getValidationErrors';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -26,7 +26,7 @@ const SignUp: React.FC = () => {
         email: Yup.string()
           .required('E-mail obrigatório')
           .email('Digite um e-mail válido'),
-        password: Yup.string().min(6, 'No mínimo 6 digitos'),
+        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
       });
       await schema.validate(data, {
         abortEarly: false,
