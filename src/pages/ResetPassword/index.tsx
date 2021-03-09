@@ -1,5 +1,5 @@
 import React, { useCallback, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
@@ -14,6 +14,7 @@ import Button from '../../components/Button';
 import logoImg from '../../assets/logo.svg';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
+import api from '../../services/api';
 
 interface ResetPasswordFromData {
   password: string;
@@ -27,6 +28,7 @@ const ResetPassword: React.FC = () => {
   const { addToast } = useToast();
 
   const history = useHistory();
+  const location = useLocation();
 
   const handleSubmit = useCallback(
     async (data: ResetPasswordFromData) => {
@@ -40,11 +42,25 @@ const ResetPassword: React.FC = () => {
             'Senha e confirmação de senha incorretas.',
           ),
         });
+
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        history.push('/signin');
+        const { password, password_confirmation } = data;
+        const token = location.search.replace('?token=', '');
+
+        if (!token) {
+          throw new Error();
+        }
+
+        api.post('/password/reset', {
+          password,
+          password_confirmation,
+          token,
+        });
+
+        history.push('/');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const erros = getValidationErrors(err);
@@ -62,7 +78,7 @@ const ResetPassword: React.FC = () => {
         });
       }
     },
-    [addToast, history],
+    [addToast, history, location],
   );
 
   return (
