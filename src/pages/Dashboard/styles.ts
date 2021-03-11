@@ -1,7 +1,8 @@
 import { shade } from 'polished';
 import styled from 'styled-components';
 
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
+import ArrowLeftIcon from '../../assets/ArrowLeftIcon.svg';
+import ArrowRightIcon from '../../assets/ArrowRightIcon.svg';
 
 export const Container = styled.div``;
 
@@ -237,7 +238,7 @@ export const Calendar = styled.aside`
       top: 0;
 
       &--prev {
-        background: url(${FiArrowLeft}) no-repeat center;
+        background: url(${ArrowLeftIcon}) no-repeat center;
         margin-right: 0;
         left: 12px;
         width: 50px;
@@ -245,7 +246,7 @@ export const Calendar = styled.aside`
       }
 
       &--next {
-        background: url(${FiArrowRight}) no-repeat center;
+        background: url(${ArrowRightIcon}) no-repeat center;
         right: 12px;
         width: 50px;
         height: 50px;
